@@ -24,4 +24,8 @@ class AuthController extends Controller
             return back()->with('error', 'please enter correct crendential');
         }
     }
+    public function logout()
+    {
+        return redirect('auth/login-basic');
+    }
 }

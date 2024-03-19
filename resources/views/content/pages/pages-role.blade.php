@@ -3,7 +3,7 @@ $configData = Helper::appClasses();
 @endphp
 @extends('layouts/layoutMaster')
 
-@section('title', 'Module')
+@section('title', 'Role')
 @section('content')
-Module
+<a href="{{url('role/add')}}" class="btn btn-primary">Add Role</a>
 @endsection
