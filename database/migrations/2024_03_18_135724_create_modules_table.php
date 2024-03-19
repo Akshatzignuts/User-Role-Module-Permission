@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('parent_module_code')->references('code')->on('modules')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+            $table->string('created_by');
+            $table->string('updated_by');
             $table->foreign('created_by')->references('code')->on('modules');
             $table->foreign('updated_by')->references('code')->on('modules');
         });

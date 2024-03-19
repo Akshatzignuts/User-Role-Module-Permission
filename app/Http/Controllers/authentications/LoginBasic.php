@@ -12,4 +12,5 @@ class LoginBasic extends Controller
     $pageConfigs = ['myLayout' => 'blank'];
     return view('content.authentications.auth-login-basic', ['pageConfigs' => $pageConfigs]);
   }
+  
 }

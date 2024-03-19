@@ -11,17 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
-            $table->string('description', 255)->nullable();
-            $table->tinyInteger('is_active');
+            $table->string('address', 255);
+            $table->string('industry', 64);
+            $table->string('owner_name', 64);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
-            $table->foreign('created_by')->references('id')->on('permissions');
-            $table->foreign('updated_by')->references('id')->on('permissions');
+            $table->foreign('created_by')->references('id')->on('companies');
+            $table->foreign('updated_by')->references('id')->on('companies');
         });
     }
 
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('companies');
     }
 };

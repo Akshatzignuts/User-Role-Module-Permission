@@ -18,6 +18,8 @@ return new class extends Migration
             $table->tinyInteger('is_active');
             $table->timestamps();
             $table->softDeletes();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->foreign('created_by')->references('id')->on('roles');
             $table->foreign('updated_by')->references('id')->on('roles');
             

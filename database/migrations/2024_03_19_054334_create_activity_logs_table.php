@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 64);
-            $table->string('description', 255)->nullable();
-            $table->tinyInteger('is_active');
+            $table->string('name', 32);
+            $table->string('description', 255);
+            $table->string('assigned_person', 64);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
-            $table->foreign('created_by')->references('id')->on('permissions');
-            $table->foreign('updated_by')->references('id')->on('permissions');
+            $table->foreign('created_by')->references('id')->on('activity_logs');
+            $table->foreign('updated_by')->references('id')->on('activity_logs');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('activity_logs');
     }
 };
