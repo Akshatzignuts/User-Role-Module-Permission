@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 64);
             $table->string('description', 255)->nullable();
-            $table->tinyInteger('is_active');
+            $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('permissions');
             $table->foreign('updated_by')->references('id')->on('permissions');
         });

@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('name', 64);
             $table->string('description', 255)->nullable();
             $table->string('parent_module_code', 16)->nullable();
+            $table->tinyInteger('is_active')->default(1);
             $table->foreign('parent_module_code')->references('code')->on('modules')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->foreign('created_by')->references('code')->on('modules');
             $table->foreign('updated_by')->references('code')->on('modules');
         });

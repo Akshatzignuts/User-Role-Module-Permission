@@ -11,14 +11,14 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-
+       // dd($request->all());
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required'
         ]);
+
         $user = $request->only('email', 'password');
         if (Auth::attempt(['email' => $user['email'], 'password' => $user['password']])) {
-            $user = Auth::user();
             return view('content.pages.pages-home');
         } else {
             return back()->with('error', 'please enter correct crendential');

@@ -7,22 +7,22 @@
       "slug": "pages-home"
     },
     {
+      "url": "modules",
+      "name": "Modules",
+      "icon": "menu-icon fas fa-cog fa-3x",
+      "slug": "pages-module"
+    },
+    {
       "url": "permissions",
       "icon": "menu-icon fas fa-lock fa-3x",
       "name": "Permissions",
-      "slug": "pages-page-2"
+      "slug": "pages-permission"
     },
     {
       "url": "roles",
       "name": "Role",
       "icon": "menu-icon fas fa-crown fa-3x",
       "slug": "roles"
-    },
-    {
-      "url": "modules",
-      "name": "Modules",
-      "icon": "menu-icon fas fa-cog fa-3x",
-      "slug": "pages-misc-error"
     },
     {
       "url": "auth/login-basic",
