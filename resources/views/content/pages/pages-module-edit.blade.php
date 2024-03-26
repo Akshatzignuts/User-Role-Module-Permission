@@ -26,7 +26,7 @@ $configData = Helper::appClasses();
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-message">Description</label>
                         <div class="col-sm-10">
-                            <textarea id="basic-default-message" class="form-control" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2">{{$module->description}}</textarea>
+                            <textarea id="basic-default-message" class="form-control">{{$module->description}}</textarea>
                         </div>
                     </div>
                     <div class="row justify-content-end">

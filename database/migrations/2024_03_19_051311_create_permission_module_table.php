@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('add');
             $table->tinyInteger('edit');
             $table->tinyInteger('delete');
+            $table->tinyInteger('all');
         });
     }
 

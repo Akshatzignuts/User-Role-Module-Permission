@@ -171,7 +171,7 @@ $configData = Helper::appClasses();
 
     /* Search bar styling */
 
-    .search-bar {
+    .search-input {
         width: 300px;
         padding: 10px;
         border: 2px solid #ccc;

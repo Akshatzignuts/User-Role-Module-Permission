@@ -40,7 +40,13 @@ Route::get('/modules', [AdminController::class, 'displayModule'])->name('modules
 Route::get('/module/edit/{code}', [AdminController::class, 'editModule'])->name('module-edit');
 Route::post('module/edited/{code}', [AdminController::class, 'updateModule'])->name('module-update');
 //Route::put('/module', [AdminController::class, 'isActive'])->name('toggle-is-active');
-Route::get('/permissions', $controller_path . '\pages\Page2@index')->name('permission');
+
+
+Route::get('/permission', $controller_path . '\pages\Page2@index')->name('permission');
 Route::get('/permission/add/', [AdminController::class, 'permission'])->name('permission-add');
 Route::post('/permission/added/', [AdminController::class, 'addPermission'])->name('permission-added');
-//Route::get('/permission/display/', [AdminController::class, 'displayPermission'])->name('permission-display');
+Route::get('/permissions', [AdminController::class, 'displayPermission'])->name('permission-display');
+Route::get('/permission/delete/{id}', [AdminController::class, 'deletePermission'])->name('permission-delete');
+Route::get('/permission/edit/{id}', [AdminController::class, 'editPermission'])->name('permission-edit');
+Route::post('/permission/edited/{id}', [AdminController::class, 'updatePermission'])->name('permission-update');
+//Route::get('/permissions/{id}', [AdminController::class, 'updateIsActive']);

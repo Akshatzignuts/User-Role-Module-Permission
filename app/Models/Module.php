@@ -24,4 +24,5 @@ class Module extends Model
     {
         return $this->hasMany(Module::class, 'parent_module_code', 'code');
     }
+    
 }

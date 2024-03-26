@@ -28,6 +28,7 @@ class AdminController extends Controller
         return view('content.pages.pages-module', compact('modules', 'search'));
     }
 
+
     public function editModule(Request $request, $code)
     {
 
@@ -44,23 +45,95 @@ class AdminController extends Controller
     }
     public function permission()
     {
-        return view('content.pages.pages-permission-add');
+        $modules = Module::all();
+        return view('content.pages.pages-permission-add', compact('modules'));
     }
     public function addPermission(Request $request)
     {
 
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
+
+        ]);
+        $permissions = Permission::create($request->only('name', 'description'));
+        $modules = Module::all();
+        foreach ($modules as $module) {
+            $moduleCode = $module->code;
+            $permissions->modules()->attach(
+                $moduleCode,
+                [
+                    'add' => $request->has('addCheckbox' . $moduleCode),
+                    'edit' => $request->has('editCheckbox' . $moduleCode),
+                    'delete' => $request->has('deleteCheckbox' . $moduleCode),
+                    'view' => $request->has('viewCheckbox' . $moduleCode)
+                ]
+            );
+        }
+        return redirect('/permissions');
+    }
+   
+    public function displayPermission(Request $request)
+    {
+        $search = $request->input('search');
+        $filter = $request->input('filter');
+        $query = Permission::query();
+        if ($request->has('search')) {
+            $query->when($request->has('search'), function ($query) use ($request) {
+                $search = $request->search;
+                $query->where('name', 'like', "%{$search}%");
+            });
+        }
+        if ($filter === 'activated') {
+            $query->where('is_active', 1);
+        } elseif ($filter === 'deactivated') {
+            $query->where('is_active', 0);
+        }
+        $permissions = $query->get();
+        return view('content.pages.pages-permission', compact('permissions', 'search', 'filter'));
+    }
+    public function deletePermission($id)
+    {
+        $permissions = Permission::findOrFail($id);
+        $permissions->delete();
+        return redirect()->back()->with('message', 'course deleted successfully');
+    }
+    public function editPermission($id)
+    {
+        $modules = Module::all();
+        $permission = Permission::where('id', $id)->firstOrFail();
+        return view('content.pages.pages-permission-edit', compact('permission', 'modules'));
+    }
+    public function updatePermission(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
         ]);
 
-        $permissions = Permission::create($request->only('name', 'description'));
+        // Find the permission record by ID
+        $permission = Permission::findOrFail($id);
 
-        return redirect('/permissions')->with('success', 'Permission added successfully');
+        // Update the permission record
+        $permission->update($request->only('name', 'description'));
+
+        // Detach all existing module permissions
+        $permission->modules()->detach();
+
+        // Attach new module permissions based on the checkboxes
+        $modules = Module::all();
+        foreach ($modules as $module) {
+            $moduleCode = $module->code;
+            $permission->modules()->attach(
+                $moduleCode,
+                [
+                    'add' => $request->has('addCheckbox' . $moduleCode),
+                    'edit' => $request->has('editCheckbox' . $moduleCode),
+                    'delete' => $request->has('deleteCheckbox' . $moduleCode),
+                    'view' => $request->has('viewCheckbox' . $moduleCode)
+                ]
+            );
+        }
+        return redirect('/permissions');
     }
-    /* public function displayPermission()
-    {
-        $permissions = Permission::all();
-        return view('content.pages.pages-permission', compact('permissions'));
-    }*/
 }
