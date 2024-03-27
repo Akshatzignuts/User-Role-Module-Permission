@@ -44,11 +44,12 @@ $configData = Helper::appClasses();
                     <td><strong>{{$permission->name}}</strong></td>
                     <td>{{$permission->description}}</td>
                     <td>
-                        <form method="POST" action="{{url('/permissions')}}">
+                        <form id="togglePermissionForm" method="POST" action="{{url('/permissions/')}}">
                             @csrf
-
+                            @method('PUT')
+                            <input type="hidden" name="permission_id" value="{{ $permission->id }}">
                             <label class="switch">
-                                <input type="checkbox" name="is_active" class="switch-input" id="is_active_checkbox" class="switch-input" {{ $permission->is_active ? 'checked' : '' }}>
+                                <input type="checkbox" name="is_active" class="switch-input toggle-switch" {{ $permission->is_active ? 'checked' : '' }}>
                                 <span class="switch-toggle-slider">
                                     <span class="switch-on"></span>
                                     <span class="switch-off"></span>
@@ -58,8 +59,8 @@ $configData = Helper::appClasses();
                     </td>
                     <td> <a href="{{url('/permission/edit/' . $permission->id)}}" class="bi bi-pencil-square"></a></td>
                     <td>
-                        <form action="{{url('/permission/delete' . $permission->id)}}" method="">
-                            <a href="{{url( '/permission/delete/' . $permission->id)}}" onclick="return confirm('Are you sure you want to delete this course?')"><i class="bi bi-trash"></i></a>
+                        <form action="{{url('/permission/delete/' . $permission->id)}}">
+                            <a href="{{url('/permission/delete/' . $permission->id)}}" onclick="return confirm('Are you sure you want to delete this course?')"><i class="bi bi-trash"></i></a>
                         </form>
                     </td>
                 </tr>
@@ -67,6 +68,33 @@ $configData = Helper::appClasses();
         </table>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.toggle-switch').change(function() {
+            var isChecked = $(this).prop('checked');
+            var permissionId = $(this).closest('form').find('input[name="permission_id"]').val();
+
+            // Send AJAX request
+            $.ajax({
+                type: "PUT"
+                , url: "{{ url('/permissions') }}"
+                , data: {
+                    permission_id: permissionId
+                    , is_active: isChecked ? 1 : 0
+                    , _token: $('input[name="_token"]').val()
+                }
+                , success: function(response) {
+                    console.log(response);
+                }
+                , error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
+</script>
 @endsection
 <style>
     .add-button {
@@ -124,6 +152,7 @@ $configData = Helper::appClasses();
     .search-button:hover {
         background-color: #0056b3;
     }
+
 
     .btn-success {
         margin-left: 600px;

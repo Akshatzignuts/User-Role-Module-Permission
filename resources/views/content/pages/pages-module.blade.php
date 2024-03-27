@@ -11,7 +11,7 @@ $configData = Helper::appClasses();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module List</title>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="search-container">
@@ -45,11 +45,12 @@ $configData = Helper::appClasses();
                         <td>{{$module->name}}</td>
                         <td>{{$module->description}}</td>
                         <td>
-                            <form method="POST" action="">
+                            <form id="toggleModuleForm" method="POST" action="{{ url('/modules/') }}">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="module_code" value="{{ $module->code }}">
                                 <label class="switch">
-                                    <input type="checkbox" name="is_active" class="switch-input" {{ $module->is_active ? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_active" class="switch-input" id="is_active_checkbox" {{ $module->is_active ? 'checked' : '' }}>
                                     <span class="switch-toggle-slider">
                                         <span class="switch-on"></span>
                                         <span class="switch-off"></span>
@@ -70,13 +71,18 @@ $configData = Helper::appClasses();
                         <td>{{$submodule->name}}</td>
                         <td>{{$submodule->description}}</td>
                         <td>
-                            <label class="switch">
-                                <input type="checkbox" name="is_active" class="switch-input" {{ $submodule->is_active ? 'checked' : '' }}>
-                                <span class="switch-toggle-slider">
-                                    <span class="switch-on"></span>
-                                    <span class="switch-off"></span>
-                                </span>
-                            </label>
+                            <form id="toggleModuleForm" method="POST" action="{{ url('/modules/') }}">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="module_code" value="{{ $submodule->code }}">
+                                <label class="switch">
+                                    <input type="checkbox" name="is_active" class="switch-input" id="is_active_checkbox" {{ $submodule->is_active ? 'checked' : '' }}>
+                                    <span class="switch-toggle-slider">
+                                        <span class="switch-on"></span>
+                                        <span class="switch-off"></span>
+                                    </span>
+                                </label>
+                            </form>
                         </td>
                         <td><a href="{{ url('module/edit/' . $submodule->code) }}" class="edit-button">Edit</a></td>
                     </tr>
@@ -94,6 +100,35 @@ $configData = Helper::appClasses();
                 header.addEventListener('click', () => {
                     const moduleDetails = header.nextElementSibling;
                     moduleDetails.style.display = moduleDetails.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('.switch-input').change(function() {
+                    var isChecked = $(this).prop('checked');
+                    var moduleCode = $(this).closest('form').find('input[name="module_code"]').val();
+                    var formData = {
+                        module_code: moduleCode
+                        , is_active: isChecked ? 1 : 0
+                    };
+
+                    // Send AJAX request
+                    $.ajax({
+                        type: "PUT"
+                        , url: $(this).closest('form').attr('action')
+                        , data: formData
+                        , success: function(response) {
+                            console.log(response);
+                        }
+                        , error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                        , headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    , });
                 });
             });
 

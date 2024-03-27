@@ -19,10 +19,10 @@
       "slug": "pages-permission"
     },
     {
-      "url": "roles",
+      "url": "role",
       "name": "Role",
       "icon": "menu-icon fas fa-crown fa-3x",
-      "slug": "roles"
+      "slug": "role"
     },
     {
       "url": "auth/login-basic",

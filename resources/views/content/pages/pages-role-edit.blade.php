@@ -46,30 +46,30 @@ $configData = Helper::appClasses();
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Roles</div>
+                <div class="card-header">Edit Role</div>
                 <div class="card-body">
-                    <form class="role-form" method="POST" action="{{url('/role/added/')}}">
+                    <form class="role-form" method="POST" action="">
                         @csrf
                         <div class="form-group">
                             <label for="name">Role Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="text" class="form-control" id="name" value="{{$roles->name}}" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="description">Role Description</label>
-                            <textarea id="basic-default-message" name="description" placeholder="Enter role description" class="form-control"></textarea>
+                            <textarea id="basic-default-message" name="description" placeholder="Enter role description" class="form-control">{{$roles->description}}</textarea>
                         </div>
-
                         <div class="col-md-6 select2-primary">
-                            <label for="select2Success" class="form-label">Select Permissions:</label>
-                            <select id="select2Success" name="permissions[]" class="select2 form-select" multiple>
-                                @foreach ($permissions as $permission)
-                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
-                                @endforeach
-                                <!-- Options will be dynamically populated -->
-                            </select>
+                            <div class="col-md-6 select2-primary">
+                                <label for="select2Success" class="form-label">Select Permissions:</label>
+                                <select id="select2Success" name="permissions[]" class="select2 form-select" multiple>
+                                    @foreach ($permissions as $permission)
+                                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                    @endforeach
+                                    <!-- Options will be dynamically populated -->
+                                </select>
+                            </div>
                         </div>
-                        <a href="{{ url('/role/add/') }}" class="btn btn-danger">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Add Role</button>
+                        <button type="submit" class="btn btn-primary">Edit Role</button>
                     </form>
                 </div>
             </div>
@@ -78,23 +78,12 @@ $configData = Helper::appClasses();
 </div>
 
 
-<script>
-    $(document).ready(function() {
-        // Initialize Select2 with tags
-        $('#permissions').select2({
-            placeholder: 'Select permissions'
-            , tags: true // Enable the tags feature
-        });
-    });
 
-</script>
 
 @endsection
 <style>
     .btn {
         margin-top: 20px;
     }
-
-    .select2 {}
 
 </style>

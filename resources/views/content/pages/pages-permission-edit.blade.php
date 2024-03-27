@@ -10,7 +10,7 @@ $configData = Helper::appClasses();
     <div class="col-xxl">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h3 class="mb-0">Add Permission </h3>
+                <h3 class="mb-0">Edit Permission </h3>
             </div>
             <div class="card-body">
                 <form action="{{url('permission/edited/' . $permission->id)}}" method="post">
@@ -78,6 +78,13 @@ $configData = Helper::appClasses();
         </div>
     </div>
     <script>
-     
+
     </script>
     @endsection
+    <style>
+        .btn-primary {
+            margin-top: 10px;
+            margin-left: 300px;
+        }
+
+    </style>

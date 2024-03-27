@@ -96,3 +96,10 @@ $configData = Helper::appClasses();
 
     </script>
     @endsection
+    <style>
+        .btn-primary {
+            margin-top: 10px;
+            margin-left: 300px;
+        }
+
+    </style>
