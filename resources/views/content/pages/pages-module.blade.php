@@ -15,10 +15,13 @@ $configData = Helper::appClasses();
 </head>
 <body>
     <div class="search-container">
+
         <form action="{{route('modules')}}" method="GET" class="search-form">
             <input type="text" name="search" class="search-input" value="{{$search}}" placeholder="Search Module">
             <button type="submit" class="search-button">Search</button>
         </form>
+
+
         <div class="filter">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
             <ul class="dropdown-menu">
@@ -28,7 +31,14 @@ $configData = Helper::appClasses();
             </ul>
         </div>
     </div>
+
+
     <h2>Module List</h2>
+
+    @if(count($modules) === 0 && $search)
+    <p class="no-results-message">No search matched for "{{ $search }}".</p>
+    @endif
+
     <ul class="module-list">
         <li class="module">
             @foreach($modules as $module)
@@ -90,11 +100,23 @@ $configData = Helper::appClasses();
                 </table>
             </div>
             @endforeach
+
         </li>
         </table>
         </div>
         </div>
+        @if(session('success'))
+        <div id="alert-success" class="alert alert-success">
+            {{ session('success') }}
         </div>
+        @endif
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-success').style.display = 'none';
+            }, 1000);
+
+        </script>
         <script>
             document.querySelectorAll('.module-header').forEach(header => {
                 header.addEventListener('click', () => {
@@ -104,6 +126,7 @@ $configData = Helper::appClasses();
             });
 
         </script>
+
         <script>
             $(document).ready(function() {
                 $('.switch-input').change(function() {
@@ -163,6 +186,13 @@ $configData = Helper::appClasses();
         padding: 20px;
         display: none;
         border: 1px solid #ddd;
+    }
+
+    .no-results-message {
+        color: #6c757d;
+        font-size: 2rem;
+        margin-top: 10rem;
+        text-align: center;
     }
 
     .module-details table {

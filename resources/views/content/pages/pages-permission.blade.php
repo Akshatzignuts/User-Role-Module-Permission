@@ -23,6 +23,9 @@ $configData = Helper::appClasses();
 
     <a href="{{route('permission-add')}}" class="btn btn-success">Add permission</a>
 </div>
+@if(count($permissions) === 0 && $search)
+<p class="no-results-message">No search matched for "{{ $search }}".</p>
+@else
 <div class="card">
     <h3 class="card-header">Permissions</h3>
     <div class="table-responsive text-nowrap">
@@ -37,6 +40,7 @@ $configData = Helper::appClasses();
                     <th colspan=2>Actions</th>
                 </tr>
             </thead>
+
             <tbody class="table-border-bottom-0">
 
                 @foreach ($permissions as $permission)
@@ -65,9 +69,11 @@ $configData = Helper::appClasses();
                     </td>
                 </tr>
                 @endforeach
+
         </table>
     </div>
 </div>
+@endif
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -123,6 +129,13 @@ $configData = Helper::appClasses();
         border-radius: 5px;
         margin-right: 10px;
         font-size: 16px;
+    }
+
+    .no-results-message {
+        color: #6c757d;
+        font-size: 2rem;
+        margin-top: 10rem;
+        text-align: center;
     }
 
     .search-container {

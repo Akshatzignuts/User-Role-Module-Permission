@@ -26,6 +26,9 @@ $configData = Helper::appClasses();
 
     <a href="{{url('/role/add/')}}" class="btn btn-success">Add Role</a>
 </div>
+@if(count($roles) === 0 && $search)
+<p class="no-results-message">No search matched for "{{ $search }}".</p>
+@else
 <div class="card">
     <h3 class="card-header">Roles</h3>
     <div class="table-responsive text-nowrap">
@@ -67,11 +70,10 @@ $configData = Helper::appClasses();
                     </td>
                 </tr>
                 @endforeach
-
         </table>
     </div>
 </div>
-
+@endif
 <script>
     $(document).ready(function() {
         $('.toggle-switch').change(function() {
@@ -153,6 +155,13 @@ $configData = Helper::appClasses();
 
     .search-button:hover {
         background-color: #0056b3;
+    }
+
+    .no-results-message {
+        color: #6c757d;
+        font-size: 2rem;
+        margin-top: 10rem;
+        text-align: center;
     }
 
 </style>

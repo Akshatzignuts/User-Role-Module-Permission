@@ -19,7 +19,7 @@ class ModuleSeeder extends Seeder
             'name' => 'Contact',
             'description' => 'details of company',
             'is_active' => '1',
-            
+
 
 
         ]);
@@ -29,50 +29,15 @@ class ModuleSeeder extends Seeder
             'name' => 'Account',
             'description' => 'information of work',
             'is_active' => '1',
-            
+
         ]);
-        DB::table('modules')->insert([
-
-            'code' => 'Dashboard',
-            'name' => 'Dashboard',
-            'description' => 'All about dashboard',
-            'is_active' => '1',
-            
-        ]);
-        DB::table('modules')->insert([
-
-            'code' => 'Permission',
-            'name' => 'Permission',
-            'description' => 'Define all the permission',
-            'is_active' => '1',
-            
-        ]);
-        DB::table('modules')->insert([
-
-            'code' => 'Role',
-            'name' => 'Role',
-            'description' => 'Define roles of the user ',
-            'is_active' => '1',
-            
-        ]);
-        DB::table('modules')->insert([
-
-            'code' => 'User',
-            'name' => 'User',
-            'description' => 'Define the user ',
-            'is_active' => '1',
-            
-        ]);
-        
-
-
         DB::table('modules')->insert([
             'code' => 'Company',
             'name' => 'Company',
             'description' => 'it has details of the company',
             'parent_module_code' => 'contact',
             'is_active' => '1',
-            
+
         ]);
         DB::table('modules')->insert([
             'code' => 'People',
@@ -80,7 +45,7 @@ class ModuleSeeder extends Seeder
             'description' => 'it has details of peoples in company',
             'parent_module_code' => 'contact',
             'is_active' => '1',
-           
+
         ]);
         DB::table('modules')->insert([
             'code' => 'Meeting',
@@ -88,7 +53,7 @@ class ModuleSeeder extends Seeder
             'description' => 'it has details of meeting',
             'parent_module_code' => 'account',
             'is_active' => '1',
-            
+
 
         ]);
         DB::table('modules')->insert([
@@ -97,7 +62,7 @@ class ModuleSeeder extends Seeder
             'description' => 'it has details of notes',
             'parent_module_code' => 'account',
             'is_active' => '1',
-           
+
         ]);
         DB::table('modules')->insert([
             'code' => 'Activity_logs',
@@ -105,7 +70,7 @@ class ModuleSeeder extends Seeder
             'description' => 'it has details of activity_logs',
             'parent_module_code' => 'account',
             'is_active' => '1',
-            
+
         ]);
     }
 }

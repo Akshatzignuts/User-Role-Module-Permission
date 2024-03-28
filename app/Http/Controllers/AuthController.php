@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required'
@@ -24,7 +24,7 @@ class AuthController extends Controller
             return back()->with('error', 'please enter correct crendential');
         }
     }
-    public function logout()
+    public function logout(Request $request)
     {
         return redirect('auth/login-basic');
     }

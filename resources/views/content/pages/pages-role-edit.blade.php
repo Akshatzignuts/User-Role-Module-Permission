@@ -48,7 +48,7 @@ $configData = Helper::appClasses();
             <div class="card">
                 <div class="card-header">Edit Role</div>
                 <div class="card-body">
-                    <form class="role-form" method="POST" action="">
+                    <form class="role-form" method="POST" action="{{url('/role/edited/' . $roles->id)}}">
                         @csrf
                         <div class="form-group">
                             <label for="name">Role Name</label>
@@ -63,7 +63,7 @@ $configData = Helper::appClasses();
                                 <label for="select2Success" class="form-label">Select Permissions:</label>
                                 <select id="select2Success" name="permissions[]" class="select2 form-select" multiple>
                                     @foreach ($permissions as $permission)
-                                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                    <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', $roles->permissions->pluck('id')->toArray())) ? 'selected' : '' }}>{{ $permission->name }}</option>
                                     @endforeach
                                     <!-- Options will be dynamically populated -->
                                 </select>
@@ -87,3 +87,4 @@ $configData = Helper::appClasses();
     }
 
 </style>
+

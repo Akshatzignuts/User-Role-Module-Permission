@@ -59,9 +59,7 @@ $configData = Helper::appClasses();
                                         <td>
                                             <input type="checkbox" name="viewCheckbox" id="viewCheckbox" value=""><br>
                                         </td>
-
                                     </tr>
-
                                 </tbody>
                                 @endif
                                 @endforeach
